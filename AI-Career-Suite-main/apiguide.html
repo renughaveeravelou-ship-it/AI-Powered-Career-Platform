@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Career Suite — Complete API Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#07070f; --bg2:#0d0d1a; --bg3:#141420;
+  --border:rgba(139,92,246,0.18); --border2:rgba(139,92,246,0.4);
+  --purple:#8b5cf6; --purple2:#a78bfa; --violet:#7c3aed;
+  --green:#10b981; --green2:#34d399;
+  --amber:#f59e0b; --amber2:#fbbf24;
+  --red:#ef4444; --red2:#f87171;
+  --blue:#3b82f6; --blue2:#93c5fd;
+  --text:#e2e8f0; --text2:#94a3b8; --text3:#475569;
+  --fh:'Syne',sans-serif; --fb:'DM Sans',sans-serif; --fm:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);min-height:100vh;line-height:1.6}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--violet);border-radius:3px}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(7,7,15,0.9);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 2rem;display:flex;align-items:center;gap:1rem;
+  height:60px;
+}
+.nav-logo{font-family:var(--fh);font-size:1.1rem;font-weight:800;
+  background:linear-gradient(135deg,#a78bfa,#60a5fa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;white-space:nowrap}
+.nav-links{display:flex;gap:0.3rem;overflow-x:auto;flex:1;
+  scrollbar-width:none;-ms-overflow-style:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-btn{
+  padding:5px 14px;border-radius:8px;font-size:0.78rem;font-weight:600;
+  border:1px solid transparent;cursor:pointer;white-space:nowrap;
+  background:transparent;color:var(--text2);transition:all 0.2s;font-family:var(--fb);
+}
+.nav-btn:hover,.nav-btn.active{
+  background:rgba(139,92,246,0.15);border-color:var(--purple);color:var(--purple2)}
+
+/* ── LAYOUT ── */
+.wrap{max-width:1100px;margin:0 auto;padding:2.5rem 2rem}
+
+/* ── HERO ── */
+.hero{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#0e0e1a,#1a0a2e 50%,#0a1628);
+  border:1px solid var(--border2);border-radius:24px;
+  padding:3.5rem 3rem;text-align:center;margin-bottom:3rem;
+}
+.hero::before{
+  content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);
+  width:700px;height:500px;
+  background:radial-gradient(ellipse,rgba(139,92,246,0.2) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;bottom:-30%;right:5%;
+  width:300px;height:300px;
+  background:radial-gradient(ellipse,rgba(16,185,129,0.08) 0%,transparent 70%);
+}
+.badge{
+  display:inline-block;
+  background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.4);
+  color:var(--purple2);font-size:0.7rem;font-weight:700;letter-spacing:0.14em;
+  text-transform:uppercase;padding:5px 16px;border-radius:100px;margin-bottom:1.2rem;
+}
+.hero h1{
+  font-family:var(--fh);font-size:2.8rem;font-weight:800;
+  background:linear-gradient(135deg,#e2e8f0,#a78bfa 50%,#60a5fa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;line-height:1.15;margin-bottom:1rem;
+}
+.hero p{color:var(--text2);font-size:1rem;max-width:580px;margin:0 auto 2rem;font-weight:300}
+.hero-stats{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;position:relative;z-index:1}
+.stat{text-align:center}
+.stat-num{font-family:var(--fh);font-size:1.8rem;font-weight:800;color:var(--purple2)}
+.stat-lbl{font-size:0.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em}
+
+/* ── SECTION TITLE ── */
+.sec-title{
+  font-family:var(--fh);font-size:0.75rem;font-weight:700;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--purple2);
+  margin:2.5rem 0 1.2rem;display:flex;align-items:center;gap:12px;
+}
+.sec-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(139,92,246,0.4),transparent)}
+
+/* ── CARDS ── */
+.provider-card{
+  border-radius:18px;padding:1.8rem;margin-bottom:1.2rem;
+  border:1px solid;position:relative;overflow:hidden;
+  transition:border-color 0.3s,box-shadow 0.3s;
+}
+.provider-card:hover{box-shadow:0 0 40px rgba(139,92,246,0.1)}
+.provider-card.free{background:rgba(16,185,129,0.03);border-color:rgba(16,185,129,0.2)}
+.provider-card.free:hover{border-color:rgba(16,185,129,0.4)}
+.provider-card.paid{background:rgba(245,158,11,0.03);border-color:rgba(245,158,11,0.15)}
+.provider-card.paid:hover{border-color:rgba(245,158,11,0.35)}
+.provider-card.star{background:rgba(139,92,246,0.05);border-color:rgba(139,92,246,0.3)}
+.provider-card.star:hover{border-color:rgba(139,92,246,0.55)}
+
+.card-head{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.card-icon{font-size:2rem;line-height:1;flex-shrink:0}
+.card-name{font-family:var(--fh);font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:0.25rem}
+.card-desc{color:var(--text2);font-size:0.88rem;font-weight:300}
+.card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:0.5rem}
+.tag{
+  padding:3px 10px;border-radius:100px;font-size:0.7rem;font-weight:700;
+  letter-spacing:0.06em;text-transform:uppercase;border:1px solid;
+}
+.tag.free-tag{background:rgba(16,185,129,0.12);color:var(--green2);border-color:rgba(16,185,129,0.3)}
+.tag.paid-tag{background:rgba(245,158,11,0.12);color:var(--amber2);border-color:rgba(245,158,11,0.3)}
+.tag.star-tag{background:rgba(139,92,246,0.15);color:var(--purple2);border-color:rgba(139,92,246,0.4)}
+.tag.rec-tag{background:rgba(96,165,250,0.12);color:var(--blue2);border-color:rgba(96,165,250,0.3)}
+.tag.fast-tag{background:rgba(251,191,36,0.12);color:#fde68a;border-color:rgba(251,191,36,0.3)}
+
+/* ── INFO GRID ── */
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;margin:1rem 0}
+@media(max-width:640px){.info-grid{grid-template-columns:1fr 1fr}}
+.info-cell{
+  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);
+  border-radius:10px;padding:0.9rem;
+}
+.info-cell-label{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem}
+.info-cell-val{font-size:0.88rem;color:var(--text);line-height:1.5}
+.green-label{color:var(--green2)}
+.amber-label{color:var(--amber2)}
+.purple-label{color:var(--purple2)}
+.red-label{color:var(--red2)}
+.blue-label{color:var(--blue2)}
+
+/* ── STEPS ── */
+.steps-box{
+  background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);
+  border-radius:12px;padding:1.2rem;margin:0.8rem 0;
+}
+.steps-title{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem}
+.step{display:flex;gap:0.8rem;padding:0.4rem 0;align-items:flex-start}
+.step-num{
+  width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:0.7rem;font-weight:800;flex-shrink:0;margin-top:2px;
+}
+.step-text{font-size:0.875rem;color:var(--text2);line-height:1.5}
+.step-text strong{color:var(--text)}
+code{
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);
+  padding:1px 7px;border-radius:5px;font-family:var(--fm);font-size:0.82rem;color:var(--purple2);
+}
+
+/* ── MODELS LIST ── */
+.models-wrap{margin-top:1rem}
+.models-title{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3);margin-bottom:0.6rem}
+.model-chips{display:flex;flex-wrap:wrap;gap:6px}
+.mchip{
+  padding:4px 12px;border-radius:100px;font-size:0.78rem;font-weight:500;border:1px solid;
+}
+.mchip.free{background:rgba(16,185,129,0.08);color:var(--green2);border-color:rgba(16,185,129,0.2)}
+.mchip.paid{background:rgba(245,158,11,0.08);color:var(--amber2);border-color:rgba(245,158,11,0.2)}
+
+/* ── TIP/WARN BOXES ── */
+.tip-box{
+  background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.2);
+  border-left:3px solid var(--purple);border-radius:0 10px 10px 0;
+  padding:0.9rem 1.1rem;font-size:0.88rem;color:var(--text);line-height:1.6;margin:0.8rem 0;
+}
+.warn-box{
+  background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);
+  border-left:3px solid var(--amber);border-radius:0 10px 10px 0;
+  padding:0.9rem 1.1rem;font-size:0.88rem;color:var(--text);line-height:1.6;margin:0.8rem 0;
+}
+.success-box{
+  background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);
+  border-left:3px solid var(--green);border-radius:0 10px 10px 0;
+  padding:0.9rem 1.1rem;font-size:0.88rem;color:var(--text);line-height:1.6;margin:0.8rem 0;
+}
+.danger-box{
+  background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);
+  border-left:3px solid var(--red);border-radius:0 10px 10px 0;
+  padding:0.9rem 1.1rem;font-size:0.88rem;color:var(--text);line-height:1.6;margin:0.8rem 0;
+}
+
+/* ── BIG COMPARISON TABLE ── */
+.table-wrap{overflow-x:auto;border-radius:14px;border:1px solid rgba(255,255,255,0.08);margin:1rem 0}
+table{width:100%;border-collapse:collapse;min-width:700px}
+th{
+  background:rgba(255,255,255,0.04);
+  font-family:var(--fh);font-size:0.72rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--purple2);padding:12px 14px;text-align:left;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+td{padding:11px 14px;font-size:0.85rem;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text2)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,0.02)}
+td strong{color:var(--text)}
+td a{color:var(--purple2);text-decoration:none;font-weight:500}
+td a:hover{text-decoration:underline}
+.pill{padding:2px 9px;border-radius:100px;font-size:0.7rem;font-weight:700;white-space:nowrap}
+.pill.green{background:rgba(16,185,129,0.15);color:var(--green2);border:1px solid rgba(16,185,129,0.25)}
+.pill.amber{background:rgba(245,158,11,0.15);color:var(--amber2);border:1px solid rgba(245,158,11,0.25)}
+.pill.red  {background:rgba(239,68,68,0.15);color:var(--red2);border:1px solid rgba(239,68,68,0.25)}
+
+/* ── ERROR TABLE ── */
+.err-grid{display:grid;gap:0.7rem;margin:1rem 0}
+.err-row{display:grid;grid-template-columns:160px 1fr 1fr;gap:0.8rem;
+  background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);
+  border-radius:10px;padding:0.8rem 1rem;align-items:start;font-size:0.85rem}
+@media(max-width:640px){.err-row{grid-template-columns:1fr}}
+.err-code{font-family:var(--fm);font-weight:500;font-size:0.82rem}
+.err-cause{color:var(--text2)}
+.err-fix{color:var(--green2)}
+
+/* ── COST CALCULATOR ── */
+.calc-wrap{background:rgba(255,255,255,0.02);border:1px solid rgba(139,92,246,0.2);border-radius:14px;padding:1.5rem;margin:1rem 0}
+.calc-title{font-family:var(--fh);font-weight:700;font-size:1rem;color:var(--purple2);margin-bottom:1rem}
+.cost-row{display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.88rem}
+.cost-row:last-child{border-bottom:none;padding-top:0.8rem;font-weight:700;color:var(--text)}
+.cost-free{color:var(--green2);font-weight:700}
+.cost-amt{color:var(--text);font-family:var(--fm)}
+
+/* ── ANCHOR ── */
+section{scroll-margin-top:70px}
+
+/* ── FOOTER ── */
+footer{text-align:center;padding:2rem;color:var(--text3);font-size:0.8rem;border-top:1px solid rgba(255,255,255,0.06);margin-top:3rem}
+footer a{color:var(--purple2);text-decoration:none}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🚀 AI Career Suite — API Guide</div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="scrollTo('free')">🆓 Free APIs</button>
+    <button class="nav-btn" onclick="scrollTo('paid')">💳 Paid APIs</button>
+    <button class="nav-btn" onclick="scrollTo('compare')">📊 Compare All</button>
+    <button class="nav-btn" onclick="scrollTo('errors')">🔧 Fix Errors</button>
+    <button class="nav-btn" onclick="scrollTo('cost')">💰 Cost Guide</button>
+    <button class="nav-btn" onclick="scrollTo('recommend')">🏆 Recommendations</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">Complete API Reference · March 2026</div>
+  <h1>Every AI API<br>Explained</h1>
+  <p>Where to get keys, how much they cost, which models to use, how to fix errors — everything in one place</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">12</div><div class="stat-lbl">Providers</div></div>
+    <div class="stat"><div class="stat-num">60+</div><div class="stat-lbl">Models</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">100% Free</div></div>
+    <div class="stat"><div class="stat-num">$0</div><div class="stat-lbl">To Start</div></div>
+  </div>
+</div>
+
+<div class="tip-box">
+⭐ <strong>Absolute beginner?</strong> Start here: Get a free key from <strong>OpenRouter</strong> (openrouter.ai/keys) — it works with 200+ models and the Auto Free Router never gives 404 errors. Takes 2 minutes.
+</div>
+
+
+<!-- ══════════════════════════════════ FREE APIs ══════════════════════════════════ -->
+<section id="free">
+<div class="sec-title">🆓 Free AI APIs — Zero Cost, No Credit Card</div>
+
+
+<!-- ── OPENROUTER ── -->
+<div class="provider-card star">
+  <div class="card-head">
+    <div class="card-icon">🔀</div>
+    <div>
+      <div class="card-name">OpenRouter</div>
+      <div class="card-desc">One API key → 200+ models from every major provider. Best starting point ever made.</div>
+      <div class="card-tags">
+        <span class="tag star-tag">⭐ Most Recommended</span>
+        <span class="tag free-tag">✅ Free Tier</span>
+        <span class="tag rec-tag">200+ Models</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="info-cell-label green-label">Free Limits</div>
+      <div class="info-cell-val">20 req/min<br>200 req/day<br>No credit card</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label amber-label">Paid Tier</div>
+      <div class="info-cell-val">Same price as<br>direct APIs<br>No markup</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label purple-label">Key Format</div>
+      <div class="info-cell-val"><code>sk-or-v1-...</code></div>
+    </div>
+  </div>
+
+  <div class="steps-box">
+    <div class="steps-title purple-label">📋 How to Get Your Free Key (2 minutes)</div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(139,92,246,0.2);color:#a78bfa">1</div>
+      <div class="step-text">Go to <strong>openrouter.ai/keys</strong> in your browser</div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(139,92,246,0.2);color:#a78bfa">2</div>
+      <div class="step-text">Click <strong>"Sign In"</strong> → Sign up with Google (completely free)</div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(139,92,246,0.2);color:#a78bfa">3</div>
+      <div class="step-text">Click <strong>"Create Key"</strong> → give it any name (e.g. "AI Career Suite")</div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(139,92,246,0.2);color:#a78bfa">4</div>
+      <div class="step-text">Copy the key starting with <code>sk-or-v1-</code></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(139,92,246,0.2);color:#a78bfa">5</div>
+      <div class="step-text">In the app sidebar: select <strong>🔀 OpenRouter</strong> → paste key → choose <strong>🎲 Auto Free Router</strong></div>
+    </div>
+  </div>
+
+  <div class="models-wrap">
+    <div class="models-title">🆓 Best Free Models</div>
+    <div class="model-chips">
+      <span class="mchip free">🎲 Auto Free Router ⭐</span>
+      <span class="mchip free">🦙 Llama 3.3 70B</span>
+      <span class="mchip free">🟠 GPT-OSS 120B</span>
+      <span class="mchip free">🔵 Qwen3 Coder 480B</span>
+      <span class="mchip free">🟡 NVIDIA Nemotron 30B</span>
+      <span class="mchip free">🌟 Gemma 3 27B</span>
+      <span class="mchip free">⚡ Mistral Small 3.1</span>
+      <span class="mchip free">🟣 Arcee Trinity Large</span>
+    </div>
+    <div class="models-title" style="margin-top:0.8rem">💎 Best Paid via OpenRouter</div>
+    <div class="model-chips">
+      <span class="mchip paid">👑 Claude 3.5 Sonnet</span>
+      <span class="mchip paid">💎 GPT-4o</span>
+      <span class="mchip paid">🌙 Gemini 2.0 Flash</span>
+      <span class="mchip paid">🧠 DeepSeek R1</span>
+    </div>
+  </div>
+
+  <div class="tip-box" style="margin-top:1rem">
+  💡 <strong>Pro tip:</strong> Always use <strong>🎲 Auto Free Router</strong> as your first choice — it automatically picks whichever free model has capacity, so you never get 404 or 429 errors!
+  </div>
+</div>
+
+
+<!-- ── GROQ ── -->
+<div class="provider-card free">
+  <div class="card-head">
+    <div class="card-icon">⚡</div>
+    <div>
+      <div class="card-name">Groq</div>
+      <div class="card-desc">Custom LPU chips make Groq <strong>10x faster</strong> than any other provider. Llama 3.3 70B responds in ~2 seconds. Free forever.</div>
+      <div class="card-tags">
+        <span class="tag free-tag">✅ Free Forever</span>
+        <span class="tag fast-tag">⚡ Fastest on Earth</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="info-cell-label green-label">Free Limits</div>
+      <div class="info-cell-val">30 req/min<br>14,400 req/day<br>No credit card</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label fast-tag" style="color:#fde68a">Speed</div>
+      <div class="info-cell-val">~2 sec response<br>Fastest inference<br>LPU hardware</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label purple-label">Key Format</div>
+      <div class="info-cell-val"><code>gsk_...</code></div>
+    </div>
+  </div>
+
+  <div class="steps-box">
+    <div class="steps-title green-label">📋 How to Get Your Free Key</div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">1</div><div class="step-text">Go to <strong>console.groq.com</strong></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">2</div><div class="step-text">Sign up free → verify your email</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">3</div><div class="step-text">Click <strong>"API Keys"</strong> in left sidebar → <strong>"Create API Key"</strong></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">4</div><div class="step-text">Name it anything → copy key starting with <code>gsk_</code></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">5</div><div class="step-text">Select <strong>⚡ Groq</strong> in app sidebar → paste key → use <strong>Llama 3.3 70B</strong></div></div>
+  </div>
+
+  <div class="models-wrap">
+    <div class="models-title">🆓 All Free Models on Groq</div>
+    <div class="model-chips">
+      <span class="mchip free">🦙 Llama 3.3 70B Versatile ⭐</span>
+      <span class="mchip free">🦙 Llama 3.1 8B Instant</span>
+      <span class="mchip free">🦙 Llama 3.2 90B Vision</span>
+      <span class="mchip free">🦙 Llama 3.2 11B Vision</span>
+      <span class="mchip free">🔮 DeepSeek R1 Distill</span>
+      <span class="mchip free">🌸 Gemma2 9B</span>
+      <span class="mchip free">⚡ Mixtral 8x7B</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── GOOGLE GEMINI ── -->
+<div class="provider-card free">
+  <div class="card-head">
+    <div class="card-icon">🌙</div>
+    <div>
+      <div class="card-name">Google Gemini</div>
+      <div class="card-desc">Official Google API. Gemini 2.0 Flash is free and extremely capable. <strong>1 million tokens/day free</strong> — that's 1000+ resume analyses.</div>
+      <div class="card-tags">
+        <span class="tag free-tag">✅ 1M Tokens/Day Free</span>
+        <span class="tag rec-tag">Google Official</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="info-cell-label green-label">Free Tier</div>
+      <div class="info-cell-val">15 req/min<br>1M tokens/day<br>No credit card</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label amber-label">Paid Tier</div>
+      <div class="info-cell-val">Gemini 1.5 Pro<br>$1.25 input<br>$5 output / M</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label purple-label">Key Format</div>
+      <div class="info-cell-val"><code>AIza...</code></div>
+    </div>
+  </div>
+
+  <div class="steps-box">
+    <div class="steps-title blue-label">📋 How to Get Your Free Key</div>
+    <div class="step"><div class="step-num" style="background:rgba(96,165,250,0.15);color:#93c5fd">1</div><div class="step-text">Go to <strong>aistudio.google.com/app/apikey</strong></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(96,165,250,0.15);color:#93c5fd">2</div><div class="step-text">Sign in with your Google account (use your personal Gmail)</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(96,165,250,0.15);color:#93c5fd">3</div><div class="step-text">Click <strong>"Create API Key"</strong> → "Create API key in new project"</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(96,165,250,0.15);color:#93c5fd">4</div><div class="step-text">Copy the key starting with <code>AIza</code></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(96,165,250,0.15);color:#93c5fd">5</div><div class="step-text">Select <strong>🌙 Google Gemini</strong> in app → paste key → use <strong>Gemini 2.0 Flash</strong></div></div>
+  </div>
+
+  <div class="models-wrap">
+    <div class="models-title">🆓 Free Models</div>
+    <div class="model-chips">
+      <span class="mchip free">⚡ Gemini 2.0 Flash ⭐</span>
+      <span class="mchip free">🌟 Gemini 1.5 Flash</span>
+      <span class="mchip free">💡 Gemini 1.5 Flash 8B</span>
+    </div>
+    <div class="models-title" style="margin-top:0.8rem">💎 Paid Models</div>
+    <div class="model-chips">
+      <span class="mchip paid">🌙 Gemini 1.5 Pro ($1.25/$5)</span>
+      <span class="mchip paid">💫 Gemini 2.0 Flash Thinking</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── HUGGING FACE ── -->
+<div class="provider-card free">
+  <div class="card-head">
+    <div class="card-icon">🤗</div>
+    <div>
+      <div class="card-name">Hugging Face</div>
+      <div class="card-desc">World's largest open-source AI hub. Free Serverless Inference API — run Llama, Gemma, Qwen and more for free.</div>
+      <div class="card-tags">
+        <span class="tag free-tag">✅ Free Inference API</span>
+        <span class="tag rec-tag">Open Source Hub</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="info-cell-label green-label">Free Tier</div>
+      <div class="info-cell-val">Free serverless<br>Rate limited<br>No credit card</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label amber-label">Note</div>
+      <div class="info-cell-val">Cold start: 30s<br>first request<br>Then fast</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label purple-label">Key Format</div>
+      <div class="info-cell-val"><code>hf_...</code></div>
+    </div>
+  </div>
+
+  <div class="steps-box">
+    <div class="steps-title amber-label">📋 How to Get Your Free Key</div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">1</div><div class="step-text">Go to <strong>huggingface.co</strong> → Create free account</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">2</div><div class="step-text">Click your profile → <strong>Settings → Access Tokens</strong></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">3</div><div class="step-text">Click <strong>"New token"</strong> → Type: <strong>Read</strong> → Create</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">4</div><div class="step-text">Copy key starting with <code>hf_</code> → paste in app</div></div>
+  </div>
+
+  <div class="models-wrap">
+    <div class="models-title">🆓 Free Models</div>
+    <div class="model-chips">
+      <span class="mchip free">🦙 Llama 3.1 8B Instruct</span>
+      <span class="mchip free">🌸 Gemma 2 9B IT</span>
+      <span class="mchip free">🔵 Qwen 2.5 7B</span>
+      <span class="mchip free">⚡ Mistral 7B v0.3</span>
+      <span class="mchip free">🧠 Phi 3.5 Mini</span>
+    </div>
+  </div>
+
+  <div class="warn-box">
+  ⚠️ <strong>Cold start:</strong> First request on a model may take 30–60 seconds to load. After that, responses are fast. If you get a 503 error, just wait 30 seconds and try again.
+  </div>
+</div>
+
+
+<!-- ── COHERE ── -->
+<div class="provider-card free">
+  <div class="card-head">
+    <div class="card-icon">🌊</div>
+    <div>
+      <div class="card-name">Cohere</div>
+      <div class="card-desc">Enterprise-grade AI great for document analysis and RAG. Command R is their free flagship model.</div>
+      <div class="card-tags">
+        <span class="tag free-tag">✅ 1000 req/month Free</span>
+        <span class="tag rec-tag">Best for RAG</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="info-cell-label green-label">Free Tier</div>
+      <div class="info-cell-val">20 req/min<br>1000 req/month<br>No credit card</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label amber-label">Paid</div>
+      <div class="info-cell-val">Command R+<br>$2.5/$10 per M<br>Enterprise</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label purple-label">Key Format</div>
+      <div class="info-cell-val"><code>random string</code></div>
+    </div>
+  </div>
+
+  <div class="steps-box">
+    <div class="steps-title green-label">📋 How to Get Your Free Key</div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">1</div><div class="step-text">Go to <strong>dashboard.cohere.com</strong></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">2</div><div class="step-text">Sign up with email — completely free</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">3</div><div class="step-text">Click <strong>"API Keys"</strong> in dashboard → copy your <strong>Trial API Key</strong></div></div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ PAID APIs ══════════════════════════════════ -->
+<section id="paid">
+<div class="sec-title">💳 Paid APIs — Best Quality (Some Have Free Credits)</div>
+
+<!-- ── ANTHROPIC ── -->
+<div class="provider-card paid">
+  <div class="card-head">
+    <div class="card-icon">👑</div>
+    <div>
+      <div class="card-name">Anthropic (Claude)</div>
+      <div class="card-desc">Makers of Claude — consistently the best AI for writing, analysis, and nuanced understanding. Claude 3.5 Sonnet is widely considered the best model for resume analysis.</div>
+      <div class="card-tags">
+        <span class="tag paid-tag">💳 Pay Per Use</span>
+        <span class="tag star-tag">Best for Writing</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="info-cell-label red-label">Free Tier</div>
+      <div class="info-cell-val">❌ No free tier<br>Pay per token<br>~$0.005/analysis</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label amber-label">Best Model</div>
+      <div class="info-cell-val">Claude 3.5 Sonnet<br>$3 input<br>$15 output / M</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label purple-label">Key Format</div>
+      <div class="info-cell-val"><code>sk-ant-api03-...</code></div>
+    </div>
+  </div>
+
+  <div class="steps-box">
+    <div class="steps-title amber-label">📋 How to Get Your Key</div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">1</div><div class="step-text">Go to <strong>console.anthropic.com</strong></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">2</div><div class="step-text">Create account → Add credit card → Buy minimum $5 credits</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">3</div><div class="step-text">Go to <strong>API Keys</strong> → Create Key → copy <code>sk-ant-api03-...</code></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">4</div><div class="step-text">Or: use Claude via <strong>🔀 OpenRouter</strong> without a direct Anthropic account!</div></div>
+  </div>
+
+  <div class="models-wrap">
+    <div class="models-title">💎 All Claude Models (Pricing per Million Tokens)</div>
+    <div class="model-chips">
+      <span class="mchip paid">👑 Claude 3.5 Sonnet — $3/$15 ⭐</span>
+      <span class="mchip paid">🧬 Claude 3.5 Haiku — $0.8/$4</span>
+      <span class="mchip paid">💜 Claude 3 Opus — $15/$75</span>
+      <span class="mchip paid">⚡ Claude 3 Haiku — $0.25/$1.25</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── OPENAI ── -->
+<div class="provider-card paid">
+  <div class="card-head">
+    <div class="card-icon">💎</div>
+    <div>
+      <div class="card-name">OpenAI</div>
+      <div class="card-desc">The original GPT makers. GPT-4o Mini is incredibly capable and cheap. Some new accounts still get free credits.</div>
+      <div class="card-tags">
+        <span class="tag paid-tag">💳 Pay Per Use</span>
+        <span class="tag amber-tag" style="background:rgba(245,158,11,0.12);color:#fbbf24;border-color:rgba(245,158,11,0.3)">~$5 New Accounts</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="info-cell-label amber-label">Free Credits</div>
+      <div class="info-cell-val">~$5 for new accounts<br>(not guaranteed)<br>Card required</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label green-label">Best Value</div>
+      <div class="info-cell-val">GPT-4o Mini<br>$0.15 input<br>$0.6 output / M</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label purple-label">Key Format</div>
+      <div class="info-cell-val"><code>sk-proj-...</code></div>
+    </div>
+  </div>
+
+  <div class="steps-box">
+    <div class="steps-title amber-label">📋 How to Get Your Key</div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">1</div><div class="step-text">Go to <strong>platform.openai.com/api-keys</strong></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">2</div><div class="step-text">Create account → Add payment method ($5 minimum top-up)</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">3</div><div class="step-text">Click <strong>"Create new secret key"</strong> → copy <code>sk-proj-...</code></div></div>
+  </div>
+
+  <div class="models-wrap">
+    <div class="models-title">💎 OpenAI Models</div>
+    <div class="model-chips">
+      <span class="mchip paid">💎 GPT-4o — $2.5/$10 ⭐</span>
+      <span class="mchip paid">🚀 GPT-4o Mini — $0.15/$0.6</span>
+      <span class="mchip paid">🔮 GPT-4 Turbo — $10/$30</span>
+      <span class="mchip paid">🧠 o1 Mini — $1.1/$4.4</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── DEEPSEEK ── -->
+<div class="provider-card paid">
+  <div class="card-head">
+    <div class="card-icon">🧠</div>
+    <div>
+      <div class="card-name">DeepSeek</div>
+      <div class="card-desc">Chinese AI lab with the <strong>best value models on earth</strong>. DeepSeek R1 beats GPT-4 on reasoning at 1/10th the price. V3 for chat is dirt cheap.</div>
+      <div class="card-tags">
+        <span class="tag amber-tag" style="background:rgba(245,158,11,0.12);color:#fbbf24;border-color:rgba(245,158,11,0.3)">~$5 New Accounts</span>
+        <span class="tag star-tag">Best Value/$ Ratio</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="info-cell-label green-label">Free Credits</div>
+      <div class="info-cell-val">~$5 new accounts<br>= 5000 analyses<br>Add card later</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label green-label">Cheapest Paid</div>
+      <div class="info-cell-val">DeepSeek Chat<br>$0.07 input<br>$1.1 output / M</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label purple-label">Key Format</div>
+      <div class="info-cell-val"><code>sk-...</code></div>
+    </div>
+  </div>
+
+  <div class="steps-box">
+    <div class="steps-title green-label">📋 How to Get Your Key (+ Free Credits)</div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">1</div><div class="step-text">Go to <strong>platform.deepseek.com</strong></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">2</div><div class="step-text">Sign up with email — free account gets ~$5 credits automatically</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">3</div><div class="step-text">Go to <strong>API Keys</strong> → Create Key → copy <code>sk-...</code></div></div>
+  </div>
+
+  <div class="success-box">
+  🎉 <strong>Best deal alert:</strong> $5 free credits + DeepSeek Chat costs $0.001 per analysis = <strong>5,000 free resume analyses!</strong>
+  </div>
+</div>
+
+
+<!-- ── TOGETHER AI ── -->
+<div class="provider-card paid">
+  <div class="card-head">
+    <div class="card-icon">🔥</div>
+    <div>
+      <div class="card-name">Together AI</div>
+      <div class="card-desc">Run the best open-source models (Llama, DeepSeek, Qwen, Gemma) at very low cost. <strong>$25 free on signup</strong> — no credit card needed!</div>
+      <div class="card-tags">
+        <span class="tag free-tag">✅ $25 Free Credits!</span>
+        <span class="tag rec-tag">Open Source Models</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="info-cell-label green-label">Free Credits</div>
+      <div class="info-cell-val">$25 on signup<br>No card needed<br>~12,000 analyses</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label amber-label">Best Model</div>
+      <div class="info-cell-val">Llama 3.3 70B Turbo<br>~$0.88 per M<br>Blazing fast</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label purple-label">Key Format</div>
+      <div class="info-cell-val"><code>random string</code></div>
+    </div>
+  </div>
+
+  <div class="steps-box">
+    <div class="steps-title green-label">📋 How to Get Your $25 Free Credits</div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">1</div><div class="step-text">Go to <strong>api.together.xyz</strong></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">2</div><div class="step-text">Sign up → $25 free credits added automatically — NO card needed</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">3</div><div class="step-text">Go to <strong>Settings → API Keys</strong> → copy key</div></div>
+  </div>
+</div>
+
+
+<!-- ── XAI ── -->
+<div class="provider-card paid">
+  <div class="card-head">
+    <div class="card-icon">🔥</div>
+    <div>
+      <div class="card-name">xAI (Grok)</div>
+      <div class="card-desc">Elon Musk's AI. Grok 3 is highly capable. <strong>$25 free credits on signup</strong> and Grok 3 Mini is extremely affordable.</div>
+      <div class="card-tags">
+        <span class="tag free-tag">✅ $25 Free Credits!</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="info-cell-label green-label">Free Credits</div>
+      <div class="info-cell-val">$25 on signup<br>No card needed<br>~50,000 analyses</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label amber-label">Models</div>
+      <div class="info-cell-val">Grok 3 — $3/$15<br>Grok 3 Mini — $0.3/$0.5<br>Grok 2 — $2/$10</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label purple-label">Key Format</div>
+      <div class="info-cell-val"><code>xai-...</code></div>
+    </div>
+  </div>
+
+  <div class="steps-box">
+    <div class="steps-title green-label">📋 How to Get Your Key</div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">1</div><div class="step-text">Go to <strong>console.x.ai</strong></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">2</div><div class="step-text">Sign up → $25 free credits added automatically</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(16,185,129,0.15);color:#34d399">3</div><div class="step-text">Go to <strong>API Keys</strong> → Create → copy <code>xai-...</code></div></div>
+  </div>
+</div>
+
+
+<!-- ── MISTRAL ── -->
+<div class="provider-card paid">
+  <div class="card-head">
+    <div class="card-icon">⚡</div>
+    <div>
+      <div class="card-name">Mistral AI</div>
+      <div class="card-desc">French AI company with very fast and affordable models. Codestral is the best code model. Free trial credits available.</div>
+      <div class="card-tags">
+        <span class="tag amber-tag" style="background:rgba(245,158,11,0.12);color:#fbbf24;border-color:rgba(245,158,11,0.3)">Free Trial Credits</span>
+        <span class="tag rec-tag">European AI</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="info-cell-label amber-label">Free Tier</div>
+      <div class="info-cell-val">Trial credits<br>on signup<br>Card required later</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label green-label">Best Value</div>
+      <div class="info-cell-val">Mistral Small<br>$0.1/$0.3 per M<br>Very fast</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label purple-label">Key Format</div>
+      <div class="info-cell-val"><code>random string</code></div>
+    </div>
+  </div>
+
+  <div class="steps-box">
+    <div class="steps-title amber-label">📋 How to Get Your Key</div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">1</div><div class="step-text">Go to <strong>console.mistral.ai</strong></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">2</div><div class="step-text">Sign up free → verify email</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">3</div><div class="step-text">Go to <strong>API Keys</strong> → Generate new key → copy it</div></div>
+  </div>
+</div>
+
+
+<!-- ── PERPLEXITY ── -->
+<div class="provider-card paid">
+  <div class="card-head">
+    <div class="card-icon">🌐</div>
+    <div>
+      <div class="card-name">Perplexity</div>
+      <div class="card-desc">The only AI provider with <strong>real-time web search built in</strong>. Sonar searches the web before every response — great for current job market insights.</div>
+      <div class="card-tags">
+        <span class="tag paid-tag">💳 Pay Per Use</span>
+        <span class="tag star-tag">🌐 Web Search Built-In</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="info-cell-label red-label">Free Tier</div>
+      <div class="info-cell-val">❌ No free tier<br>$5 min topup<br>Card required</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label amber-label">Models</div>
+      <div class="info-cell-val">Sonar Pro — $3/$15<br>Sonar — $1/$1<br>Sonar Reasoning</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label purple-label">Key Format</div>
+      <div class="info-cell-val"><code>pplx-...</code></div>
+    </div>
+  </div>
+
+  <div class="steps-box">
+    <div class="steps-title amber-label">📋 How to Get Your Key</div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">1</div><div class="step-text">Go to <strong>perplexity.ai/settings/api</strong></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">2</div><div class="step-text">Sign up → Add payment method → $5 minimum</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(245,158,11,0.15);color:#fbbf24">3</div><div class="step-text">Go to <strong>API Keys</strong> → Generate → copy <code>pplx-...</code></div></div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ COMPARE ALL ══════════════════════════════════ -->
+<section id="compare">
+<div class="sec-title">📊 Compare All Providers at a Glance</div>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Provider</th>
+      <th>Free Tier</th>
+      <th>Free Limits</th>
+      <th>Best Free Model</th>
+      <th>Best Paid Model</th>
+      <th>Cost/Analysis*</th>
+      <th>Get Key</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>🔀 OpenRouter</strong></td>
+      <td><span class="pill green">✅ Yes</span></td>
+      <td>20/min · 200/day</td>
+      <td>Auto Free Router</td>
+      <td>Claude 3.5 Sonnet</td>
+      <td class="cost-free">FREE</td>
+      <td><a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a></td>
+    </tr>
+    <tr>
+      <td><strong>⚡ Groq</strong></td>
+      <td><span class="pill green">✅ Yes</span></td>
+      <td>30/min · 14,400/day</td>
+      <td>Llama 3.3 70B</td>
+      <td>Llama 3.1 70B</td>
+      <td class="cost-free">FREE</td>
+      <td><a href="https://console.groq.com/keys" target="_blank">console.groq.com</a></td>
+    </tr>
+    <tr>
+      <td><strong>🌙 Google Gemini</strong></td>
+      <td><span class="pill green">✅ Yes</span></td>
+      <td>15/min · 1M tok/day</td>
+      <td>Gemini 2.0 Flash</td>
+      <td>Gemini 1.5 Pro</td>
+      <td class="cost-free">FREE</td>
+      <td><a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com</a></td>
+    </tr>
+    <tr>
+      <td><strong>🤗 Hugging Face</strong></td>
+      <td><span class="pill green">✅ Yes</span></td>
+      <td>Rate limited</td>
+      <td>Llama 3.1 8B</td>
+      <td>—</td>
+      <td class="cost-free">FREE</td>
+      <td><a href="https://huggingface.co/settings/tokens" target="_blank">huggingface.co</a></td>
+    </tr>
+    <tr>
+      <td><strong>🌊 Cohere</strong></td>
+      <td><span class="pill green">✅ Yes</span></td>
+      <td>20/min · 1000/month</td>
+      <td>Command R</td>
+      <td>Command R+</td>
+      <td class="cost-free">FREE</td>
+      <td><a href="https://dashboard.cohere.com/api-keys" target="_blank">dashboard.cohere.com</a></td>
+    </tr>
+    <tr>
+      <td><strong>🔥 Together AI</strong></td>
+      <td><span class="pill green">✅ $25 Free</span></td>
+      <td>No card needed</td>
+      <td>—</td>
+      <td>Llama 3.3 70B Turbo</td>
+      <td>~$0.002</td>
+      <td><a href="https://api.together.xyz" target="_blank">api.together.xyz</a></td>
+    </tr>
+    <tr>
+      <td><strong>🔥 xAI Grok</strong></td>
+      <td><span class="pill green">✅ $25 Free</span></td>
+      <td>No card needed</td>
+      <td>—</td>
+      <td>Grok 3 Mini</td>
+      <td>~$0.001</td>
+      <td><a href="https://console.x.ai" target="_blank">console.x.ai</a></td>
+    </tr>
+    <tr>
+      <td><strong>🧠 DeepSeek</strong></td>
+      <td><span class="pill amber">~$5 New Acct</span></td>
+      <td>—</td>
+      <td>—</td>
+      <td>DeepSeek R1</td>
+      <td>~$0.001</td>
+      <td><a href="https://platform.deepseek.com" target="_blank">platform.deepseek.com</a></td>
+    </tr>
+    <tr>
+      <td><strong>💎 OpenAI</strong></td>
+      <td><span class="pill amber">~$5 New Acct</span></td>
+      <td>Card required</td>
+      <td>—</td>
+      <td>GPT-4o Mini</td>
+      <td>~$0.0003</td>
+      <td><a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a></td>
+    </tr>
+    <tr>
+      <td><strong>⚡ Mistral AI</strong></td>
+      <td><span class="pill amber">Trial Credits</span></td>
+      <td>Card required later</td>
+      <td>—</td>
+      <td>Mistral Small</td>
+      <td>~$0.0002</td>
+      <td><a href="https://console.mistral.ai" target="_blank">console.mistral.ai</a></td>
+    </tr>
+    <tr>
+      <td><strong>👑 Anthropic</strong></td>
+      <td><span class="pill red">❌ None</span></td>
+      <td>Card required</td>
+      <td>—</td>
+      <td>Claude 3.5 Sonnet</td>
+      <td>~$0.005</td>
+      <td><a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></td>
+    </tr>
+    <tr>
+      <td><strong>🌐 Perplexity</strong></td>
+      <td><span class="pill red">❌ None</span></td>
+      <td>Card required</td>
+      <td>—</td>
+      <td>Sonar (Web Search!)</td>
+      <td>~$0.005</td>
+      <td><a href="https://www.perplexity.ai/settings/api" target="_blank">perplexity.ai/api</a></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p style="color:var(--text3);font-size:0.75rem;margin-top:0.5rem">* Estimated cost per resume analysis (~2000 tokens input + 500 tokens output)</p>
+
+
+<!-- ══════════════════════════════════ ERROR FIXES ══════════════════════════════════ -->
+<section id="errors">
+<div class="sec-title">🔧 Error Codes & How to Fix Them</div>
+
+<div class="err-grid">
+  <div class="err-row">
+    <div><span class="err-code" style="color:#f87171">401 Unauthorized</span></div>
+    <div class="err-cause">🔴 <strong>Cause:</strong> Wrong API key, extra spaces, or expired key</div>
+    <div class="err-fix">✅ <strong>Fix:</strong> Copy key again carefully. No spaces before/after. Check provider dashboard.</div>
+  </div>
+  <div class="err-row">
+    <div><span class="err-code" style="color:#f87171">404 Not Found</span></div>
+    <div class="err-cause">🔴 <strong>Cause:</strong> Model was removed, renamed, or wrong model ID</div>
+    <div class="err-fix">✅ <strong>Fix:</strong> Switch to Auto Free Router (OpenRouter) — it never 404s. Or try a different model.</div>
+  </div>
+  <div class="err-row">
+    <div><span class="err-code" style="color:#fbbf24">429 Rate Limit</span></div>
+    <div class="err-cause">🟡 <strong>Cause:</strong> Too many requests (hit free tier limit)</div>
+    <div class="err-fix">✅ <strong>Fix:</strong> Wait 1 minute. Or switch to a different provider/model. Or add credits.</div>
+  </div>
+  <div class="err-row">
+    <div><span class="err-code" style="color:#f87171">402 Payment</span></div>
+    <div class="err-cause">🔴 <strong>Cause:</strong> Out of credits on paid provider</div>
+    <div class="err-fix">✅ <strong>Fix:</strong> Add credits at provider dashboard, or switch to a free provider.</div>
+  </div>
+  <div class="err-row">
+    <div><span class="err-code" style="color:#fbbf24">503 Service Unavailable</span></div>
+    <div class="err-cause">🟡 <strong>Cause:</strong> Model is loading (HuggingFace cold start) or provider down</div>
+    <div class="err-fix">✅ <strong>Fix:</strong> Wait 30–60 seconds, then retry. Normal for first HuggingFace request.</div>
+  </div>
+  <div class="err-row">
+    <div><span class="err-code" style="color:#fbbf24">Timeout</span></div>
+    <div class="err-cause">🟡 <strong>Cause:</strong> Slow/overloaded model taking too long</div>
+    <div class="err-fix">✅ <strong>Fix:</strong> Switch to Groq (fastest), or OpenRouter Auto Router.</div>
+  </div>
+  <div class="err-row">
+    <div><span class="err-code" style="color:#fbbf24">Invalid JSON</span></div>
+    <div class="err-cause">🟡 <strong>Cause:</strong> Model returned garbled output (usually small/weak models)</div>
+    <div class="err-fix">✅ <strong>Fix:</strong> Switch to a larger model like Llama 3.3 70B or Claude 3.5 Sonnet.</div>
+  </div>
+</div>
+
+<div class="danger-box">
+🚨 <strong>OpenRouter-specific:</strong> If you get a 404 on a free model, it may have been removed. Always use <strong>🎲 Auto Free Router</strong> (<code>openrouter/free</code>) as it self-updates and can never 404.
+</div>
+
+
+<!-- ══════════════════════════════════ COST GUIDE ══════════════════════════════════ -->
+<section id="cost">
+<div class="sec-title">💰 Real Cost Breakdown</div>
+
+<div class="calc-wrap">
+  <div class="calc-title">💡 How Much Does 1 Resume Analysis Cost?</div>
+  <p style="color:var(--text2);font-size:0.85rem;margin-bottom:1rem">Each analysis uses ~2,000 tokens input + 500 tokens output = ~2,500 tokens total</p>
+
+  <div class="cost-row"><span>🔀 OpenRouter — Auto Free Router</span><span class="cost-free">$0.00 FREE</span></div>
+  <div class="cost-row"><span>⚡ Groq — Llama 3.3 70B</span><span class="cost-free">$0.00 FREE</span></div>
+  <div class="cost-row"><span>🌙 Google Gemini 2.0 Flash</span><span class="cost-free">$0.00 FREE</span></div>
+  <div class="cost-row"><span>⚡ Mistral Small (paid)</span><span class="cost-amt">~$0.0003</span></div>
+  <div class="cost-row"><span>💎 GPT-4o Mini</span><span class="cost-amt">~$0.0006</span></div>
+  <div class="cost-row"><span>🧠 DeepSeek Chat V3</span><span class="cost-amt">~$0.001</span></div>
+  <div class="cost-row"><span>💎 GPT-4o</span><span class="cost-amt">~$0.006</span></div>
+  <div class="cost-row"><span>👑 Claude 3.5 Sonnet</span><span class="cost-amt">~$0.008</span></div>
+  <div class="cost-row"><span>💜 Claude 3 Opus</span><span class="cost-amt">~$0.05</span></div>
+  <div class="cost-row" style="border-top:1px solid rgba(255,255,255,0.1);padding-top:0.8rem"><span>💡 Best value: DeepSeek $5 free credits =</span><span style="color:#10b981;font-family:var(--fm)">~5,000 analyses FREE</span></div>
+</div>
+
+<div class="success-box">
+🎉 <strong>Bottom line:</strong> You can do <strong>hundreds of resume analyses completely free</strong> using OpenRouter, Groq, or Google Gemini. Only upgrade to paid when you want the absolute best quality (Claude 3.5 Sonnet).
+</div>
+
+
+<!-- ══════════════════════════════════ RECOMMENDATIONS ══════════════════════════════════ -->
+<section id="recommend">
+<div class="sec-title">🏆 Which Provider Should YOU Use?</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+
+  <div style="background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.2);border-radius:14px;padding:1.4rem">
+    <div style="font-family:var(--fh);font-weight:700;color:var(--green2);margin-bottom:0.8rem;font-size:1rem">🆓 Complete Beginner — Zero Budget</div>
+    <div style="font-size:0.88rem;color:var(--text2);line-height:1.8">
+      <strong style="color:var(--text)">Step 1:</strong> Get OpenRouter key (2 min) → use Auto Free Router<br>
+      <strong style="color:var(--text)">Step 2:</strong> Also get Groq key (fastest, 2 min)<br>
+      <strong style="color:var(--text)">Step 3:</strong> Get Google Gemini key (1M tokens/day)<br><br>
+      These 3 together give you <strong style="color:#10b981">unlimited free analyses forever.</strong>
+    </div>
+  </div>
+
+  <div style="background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.2);border-radius:14px;padding:1.4rem">
+    <div style="font-family:var(--fh);font-weight:700;color:var(--amber2);margin-bottom:0.8rem;font-size:1rem">💎 Want Best Quality</div>
+    <div style="font-size:0.88rem;color:var(--text2);line-height:1.8">
+      <strong style="color:var(--text)">Best choice:</strong> Claude 3.5 Sonnet via OpenRouter<br>
+      <strong style="color:var(--text)">Best value:</strong> DeepSeek R1 (~$0.001/analysis)<br>
+      <strong style="color:var(--text)">Most features:</strong> Perplexity Sonar (web search)<br><br>
+      Start with <strong style="color:#f59e0b">DeepSeek</strong> — $5 free credits = 5000 analyses!
+    </div>
+  </div>
+
+  <div style="background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.2);border-radius:14px;padding:1.4rem">
+    <div style="font-family:var(--fh);font-weight:700;color:var(--blue2);margin-bottom:0.8rem;font-size:1rem">⚡ Need Fastest Response</div>
+    <div style="font-size:0.88rem;color:var(--text2);line-height:1.8">
+      Use <strong style="color:#93c5fd">⚡ Groq</strong> with <strong>Llama 3.3 70B Versatile</strong><br>
+      Response time: ~2 seconds vs 15+ on others<br>
+      Completely free: 14,400 requests/day<br><br>
+      Perfect for quick iterative testing.
+    </div>
+  </div>
+
+  <div style="background:rgba(139,92,246,0.05);border:1px solid rgba(139,92,246,0.2);border-radius:14px;padding:1.4rem">
+    <div style="font-family:var(--fh);font-weight:700;color:var(--purple2);margin-bottom:0.8rem;font-size:1rem">🔁 Switching Between Providers</div>
+    <div style="font-size:0.88rem;color:var(--text2);line-height:1.8">
+      You can save <strong style="color:#a78bfa">multiple API keys</strong> and switch anytime<br>
+      When one hits rate limits → switch to another<br>
+      When one is slow → switch to Groq<br><br>
+      The sidebar lets you switch provider + model instantly.
+    </div>
+  </div>
+
+</div>
+
+<div class="tip-box">
+⭐ <strong>TL;DR — The Perfect Free Setup:</strong>
+Use <strong>🔀 OpenRouter</strong> (Auto Free Router) as primary, <strong>⚡ Groq</strong> (Llama 3.3 70B) when you need speed, and <strong>🌙 Google Gemini 2.0 Flash</strong> as backup.
+All three are 100% free, work in 5 minutes, and give excellent results. That's all you need!
+</div>
+
+</section><!-- end recommend -->
+
+</div><!-- end wrap -->
+
+<footer>
+  <strong style="color:var(--text)">AI Career Suite</strong> — API Guide · March 2026<br>
+  Built by <a href="https://github.com/yagyeshVyas">Yagyesh Vyas</a> ·
+  <a href="https://openrouter.ai/keys">Get OpenRouter Key</a> ·
+  <a href="https://console.groq.com/keys">Get Groq Key</a> ·
+  <a href="https://aistudio.google.com/app/apikey">Get Gemini Key</a>
+</footer>
+
+<script>
+function scrollTo(id){
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+// Highlight active section on scroll
+const sections = ['free','paid','compare','errors','cost','recommend'];
+const btns = document.querySelectorAll('.nav-btn');
+window.addEventListener('scroll',()=>{
+  let cur='free';
+  sections.forEach(id=>{
+    const el = document.getElementById(id);
+    if(el && window.scrollY >= el.offsetTop - 80) cur=id;
+  });
+  btns.forEach((b,i)=>b.classList.toggle('active', sections[i]===cur));
+});
+</script>
+</body>
+</html>
