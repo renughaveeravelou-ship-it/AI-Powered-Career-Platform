@@ -250,8 +250,5 @@ git push origin feature-name
 # License
 This project is licensed under educationlal purpose.
 
-# Auther
-Renugha . v
-
 # Author
 Developed by Renugha .V
