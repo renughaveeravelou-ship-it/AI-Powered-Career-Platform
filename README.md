@@ -92,6 +92,7 @@ Supports 15+ AI providers including:
 AI-Career-Suite/
 
 │ 
+
 ├── app.py                  # Main Streamlit application
 
 ├── analyzer.py             # Resume analysis engine
