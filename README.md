@@ -87,7 +87,7 @@ Supports 15+ AI providers including:
   - beautifulsoup4
   - plotly
 
-
+```text
 # Project Structure
 AI-Career-Suite/
 
@@ -118,6 +118,7 @@ AI-Career-Suite/
 ├── requirements.txt        # Dependencies
 
 └── README.md
+```
 
 ## Installation
 
